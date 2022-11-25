@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCEAN vibes by TemplateMo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="fontawesome/css/all.min.css"> 
+    <link rel="stylesheet" href="css/magnific-popup.css"> 
+    <link rel="stylesheet" href="css/templatemo-ocean-vibes.css"> 
+
+
+
+</head>
+<body>
+    <header class="tm-site-header">
+        <h1 class="tm-mt-0 tm-mb-15"><span class="tm-color-primary">PROJECT</span> <span class="tm-color-gray-2">IA</span></h1>
+        <em class="tm-tagline tm-color-light-gray">Santiago Diaz, Juan Trujillo, Juan Cortes, Nicolas Sterling</em>
+    </header>
+
+    <div id="tm-video-container">
+        <video autoplay muted loop id="tm-video">
+            <source src="video/gato_tecleando.mp4" type="video/mp4">
+        </video>  
+        <i id="tm-video-control-button" class="fas fa-pause"></i>
+    </div>
+    <div class="tm-container">
+        <nav class="tm-main-nav">
+            <ul id="inline-popups">
+                <li class="tm-nav-item">
+                    <a href="#intro" data-effect="mfp-move-from-top" class="tm-nav-link">
+                        Cervezas
+                        <br>
+                        <br>
+                        <span style='font-size:80px;'>&#127867;</span>
+                    </a>                
+                </li>
+                <li class="tm-nav-item">
+                    <a href="#gallery" data-effect="mfp-move-from-top" class="tm-nav-link" id="tm-gallery-link">
+                        Instrumentos
+                        <br>
+                        <br>
+                        <span style='font-size:65px;'>&#127926;</span>                     
+                    </a>
+                </li>
+                <li class="tm-nav-item">
+                    <a href="#testimonials" data-effect="mfp-move-from-top" class="tm-nav-link">
+                        Voz
+                        <br>
+                        <br>
+                        <span style='font-size:80px;'>&#128483;</span>
+                    </a>
+                </li>
+                <li class="tm-nav-item">
+                    <a href="#about" data-effect="mfp-move-from-top" class="tm-nav-link">
+                        Posturas
+                        <br>
+                        <br>
+                        <p><span style='font-size:80px;'>&#129336;&#127995;</span></p>
+                        <i class=""></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+
+        <div id="intro" class="popup mfp-with-anim mfp-hide tm-bg-gray">
+            <a href="#" class="tm-close-popup">
+                Inicio
+                <i class="fas fa-times"></i>
+            </a>
+            <div class="tm-row tm-intro-row">
+                <img src="img/cerveza.png" alt="Image" width="150" height="180">
+                <div class="tm-col tm-bg-white tm-intro-pad">
+                    <h2 class="tm-color-primary tm-page-title">Cervezas</h2>
+                    <div class="tm-row tm-content-row">
+                        <div class="tm-col-6 tm-intro-col-l">
+<button type="button" onclick="init()">Iniciar</button>
+<div id="webcam-container"></div>
+<div id="label-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+<script type="text/javascript">
+
+    const URL = "https://teachablemachine.withgoogle.com/models/IBbpIXyPX/";
+
+    let model, webcam, labelContainer, maxPredictions;
+
+    async function init() {
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+
+
+        model = await tmImage.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
+
+        const flip = true; 
+        webcam = new tmImage.Webcam(200, 200, flip); 
+        await webcam.setup(); 
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+        labelContainer = document.getElementById("label-container");
+        for (let i = 0; i < maxPredictions; i++) { 
+            labelContainer.appendChild(document.createElement("div"));
+        }
+    }
+
+    async function loop() {
+        webcam.update();
+        await predict();
+        window.requestAnimationFrame(loop);
+    }
+    async function predict() {
+
+        const prediction = await model.predict(webcam.canvas);
+        for (let i = 0; i < maxPredictions; i++) {
+            const classPrediction =
+                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+            labelContainer.childNodes[i].innerHTML = classPrediction;
+        }
+    }
+</script>
+
+ 
+        <div id="gallery" class="popup mfp-with-anim mfp-hide tm-bg-gray">
+            <a href="#" class="tm-close-popup">
+                Inicio
+                <i class="fas fa-times"></i>
+            </a>
+
+                    <h2 class="tm-color-primary tm-mt-35 tm-page-title">Instrumentos</h2>
+                    <img src="img/bateriaa.webp" alt="Image"width="150" height="150">
+<button type="button" onclick="init()">Iniciar</button>
+<div id="label-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/speech-commands@0.4.0/dist/speech-commands.min.js"></script>
+
+<script type="text/javascript">
+    const URLi = "https://teachablemachine.withgoogle.com/models/zIoGlPyHe/";
+
+    async function createModel() {
+        const checkpointURLi = URLi + "model.json"; 
+        const metadataURLi = URLi + "metadata.json"; 
+
+        const recognizer = speechCommands.create(
+            "BROWSER_FFT", 
+            undefined, 
+            checkpointURLi,
+            metadataURLi);
+        await recognizer.ensureModelLoaded();
+
+        return recognizer;
+    }
+
+    async function init() {
+        const recognizer = await createModel();
+        const classLabels = recognizer.wordLabels(); 
+        const labelContainer = document.getElementById("label-container");
+        for (let i = 0; i < classLabels.length; i++) {
+            labelContainer.appendChild(document.createElement("div"));
+        }
+        recognizer.listen(result => {
+            const scores = result.scores; 
+            for (let i = 0; i < classLabels.length; i++) {
+                const classPrediction = classLabels[i] + ": " + result.scores[i].toFixed(2);
+                labelContainer.childNodes[i].innerHTML = classPrediction;
+            }
+        }, {
+            includeSpectrogram: true, 
+            probabilityThreshold: 0.75,
+            invokeCallbackOnNoiseAndUnknown: true,
+            overlapFactor: 0.50 
+        });
+
+    }
+</script>
+        <div id="testimonials" class="popup mfp-with-anim mfp-hide tm-bg-gray">
+            <a href="#" class="tm-close-popup">
+                Inicio
+                <i class="fas fa-times"></i>
+            </a>
+            <div class="tm-testimonials-inner">
+                <h2 class="tm-color-gray tm-testimonial-col tm-page-title">Voces</h2>
+                <img src="img/hablando.jpg" alt="Image" width="150" height="180">
+<button type="button" onclick="init()">Iniciar</button>
+<div id="label-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/speech-commands@0.4.0/dist/speech-commands.min.js"></script>
+
+<script type="text/javascript">
+
+    const URLv = "https://teachablemachine.withgoogle.com/models/5lo0c32Of/";
+
+    async function createModel() {
+        const checkpointURLv = URLv + "model.json"; 
+        const metadataURLv = URLv + "metadata.json"; 
+
+        const recognizer = speechCommands.create(
+            "BROWSER_FFT", 
+            undefined, 
+            checkpointURLv,
+            metadataURLv);
+        await recognizer.ensureModelLoaded();
+
+        return recognizer;
+    }
+
+    async function init() {
+        const recognizer = await createModel();
+        const classLabels = recognizer.wordLabels(); 
+        const labelContainer = document.getElementById("label-container");
+        for (let i = 0; i < classLabels.length; i++) {
+            labelContainer.appendChild(document.createElement("div"));
+        }
+        recognizer.listen(result => {
+            const scores = result.scores; 
+            for (let i = 0; i < classLabels.length; i++) {
+                const classPrediction = classLabels[i] + ": " + result.scores[i].toFixed(2);
+                labelContainer.childNodes[i].innerHTML = classPrediction;
+            }
+        }, {
+            includeSpectrogram: true, 
+            probabilityThreshold: 0.75,
+            invokeCallbackOnNoiseAndUnknown: true,
+            overlapFactor: 0.50 
+        });
+    }
+</script>
+            </div>            
+        </div>
+
+        <div id="about" class="popup mfp-with-anim mfp-hide tm-bg-gray">
+            <a href="#" class="tm-close-popup">
+                Inicio
+                <i class="fas fa-times"></i>
+            </a>
+            <h2 class="tm-color-primary tm-about-col tm-mb-40 tm-page-title">Posturas</h2>
+            <div class="tm-row tm-about-row">
+                <img src="img/stikk.png" alt="Image"width="150" height="150">
+<button type="button" onclick="init()">Iniciar</button &#160;&#160;&#160;&#160;>
+<div><canvas id="canvas"></canvas></div>
+<div id="label-container"></div>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
+<script type="text/javascript">
+
+    const URLp = "https://teachablemachine.withgoogle.com/models/MJh5VAhUx/";
+    let modelp, webcamp, ctx, labelContainerp, maxPredictionsp;
+
+    async function init() {
+        const modelURLp = URLp + "model.json";
+        const metadataURLp = URLp + "metadata.json";
+
+        model = await tmPose.load(modelURLp, metadataURLp);
+        maxPredictions = model.getTotalClasses();
+
+ 
+        const size = 200;
+        const flip = true; 
+        webcam = new tmPose.Webcam(size, size, flip); 
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        const canvas = document.getElementById("canvas");
+        canvas.width = size; canvas.height = size;
+        ctx = canvas.getContext("2d");
+        labelContainer = document.getElementById("label-container");
+        for (let i = 0; i < maxPredictions; i++) { 
+            labelContainer.appendChild(document.createElement("div"));
+        }
+    }
+
+    async function loop(timestamp) {
+        webcam.update();
+        await predict();
+        window.requestAnimationFrame(loop);
+    }
+
+    async function predict() {
+
+        const { pose, posenetOutput } = await model.estimatePose(webcam.canvas);
+        const prediction = await model.predict(posenetOutput);
+
+        for (let i = 0; i < maxPredictions; i++) {
+            const classPrediction =
+                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+            labelContainer.childNodes[i].innerHTML = classPrediction;
+        }
+        drawPose(pose);
+    }
+
+    function drawPose(pose) {
+        if (webcam.canvas) {
+            ctx.drawImage(webcam.canvas, 0, 0);
+
+            if (pose) {
+                const minPartConfidence = 0.5;
+                tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx);
+                tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx);
+            }
+        }
+    }
+</script>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/imagesloaded.pkgd.min.js"></script>
+    <script src="js/isotope.pkgd.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>    
+    <script src="js/templatemo-script.js"></script>
+</body>
+</html>
